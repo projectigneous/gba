@@ -1,0 +1,14 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    cursor: url("../../img/xp_border/loading.gif"),auto;
+}
+canvas {
+    position: absolute;
+    top: 29px;
+    left: 6px;
+    width: calc(100vw - 12px);
+    height: calc(100vh - 34px);
+}

@@ -1,0 +1,35 @@
+body {
+    margin:0;
+    font-family: monospace;
+    background: #eee;
+    color: #222;
+    text-align: center;
+}
+a {
+    color: #1565C0;
+    text-decoration:none;
+}
+progress {
+    width: 600px;
+    height: 36px;
+    background: #fff;
+    margin: 4px;
+    border: 1px solid #222;
+}
+progress[value],progress[value]::-webkit-progress-bar {
+    background-color: white;
+    color: #1565C0;
+    appearance: none;
+}
+progress::-webkit-progress-value {
+    background: #1565C0 !important;
+}
+.gbaGame::before {
+    content: "GBA";
+    color: transparent;
+    width: 1em;
+    height: 1em;
+    background-image: url("../img/gba.svg");
+    background-size: cover;
+    text-decoration:none;
+}

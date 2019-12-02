@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Emulator Storage Manager</title>
+		<script>
+		window.onerror = function(a) {
+			console.error(arguments);
+			alert(a);
+		};
+		if (navigator.userAgent.match("Trident")) {
+			alert("This website does not work in IE. Please use Google Chrome or Firefox.");
+			location.replace("about:blank")
+		};
+		</script>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="storageManager.css">
+    </head>
+    <body>
+			<button onclick="location.replace(`../PLAY%20GAMES.html`)">Go back</button>
+			<h1>Storage Manager</h1>
+			<div id="container">
+				<h2>Game Storage</h2>
+				<progress max="100" value="0" id="forageMeter"></progress><br>
+				<b id="forageUsed">0B</b> used out of <b id="forageTotal"></b> allowed <button onclick="clearForage()">Clear</button><br>
+				<table id="forageContainer"></table>
+				<br><br>
+				<h2>Save Storage</h2>
+				<progress max="1000000" value="50" id="lStorageMeter"></progress> <br>
+				<b id="storageUsed">0B</b> used out of <b id="storageTotal">1MB</b> allowed <button onclick="clearStorage()">Clear</button><br>
+				<table id="storageContainer"></table>
+			</div>
+			<script src="../gba/user_scripts/localforage.min.js"></script>
+			<script src="storageManager.js">
+			</script>
+    </body>
+</html>

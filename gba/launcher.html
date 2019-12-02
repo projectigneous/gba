@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GBA Sim</title>
+        <link rel="icon" type="image/jpg" href="http://i.cubeupload.com/hnioQm.jpg">
+        <meta charset="UTF-8">
+            <!--Required Scripts-->
+            <script src="IodineGBA/includes/TypedArrayShim.js"></script>
+            <script src="IodineGBA/core/Cartridge.js"></script>
+            <script src="IodineGBA/core/DMA.js"></script>
+            <script src="IodineGBA/core/Emulator.js"></script>
+            <script src="IodineGBA/core/Graphics.js"></script>
+            <script src="IodineGBA/core/RunLoop.js"></script>
+            <script src="IodineGBA/core/Memory.js"></script>
+            <script src="IodineGBA/core/IRQ.js"></script>
+            <script src="IodineGBA/core/JoyPad.js"></script>
+            <script src="IodineGBA/core/Serial.js"></script>
+            <script src="IodineGBA/core/Sound.js"></script>
+            <script src="IodineGBA/core/Timer.js"></script>
+            <script src="IodineGBA/core/Wait.js"></script>
+            <script src="IodineGBA/core/CPU.js"></script>
+            <script src="IodineGBA/core/Saves.js"></script>
+            <script src="IodineGBA/core/sound/FIFO.js"></script>
+            <script src="IodineGBA/core/sound/Channel1.js"></script>
+            <script src="IodineGBA/core/sound/Channel2.js"></script>
+            <script src="IodineGBA/core/sound/Channel3.js"></script>
+            <script src="IodineGBA/core/sound/Channel4.js"></script>
+            <script src="IodineGBA/core/CPU/ARM.js"></script>
+            <script src="IodineGBA/core/CPU/THUMB.js"></script>
+            <script src="IodineGBA/core/CPU/CPSR.js"></script>
+            <script src="IodineGBA/core/graphics/Renderer.js"></script>
+            <script src="IodineGBA/core/graphics/RendererProxy.js"></script>
+            <script src="IodineGBA/core/graphics/BGTEXT.js"></script>
+            <script src="IodineGBA/core/graphics/BG2FrameBuffer.js"></script>
+            <script src="IodineGBA/core/graphics/BGMatrix.js"></script>
+            <script src="IodineGBA/core/graphics/AffineBG.js"></script>
+            <script src="IodineGBA/core/graphics/ColorEffects.js"></script>
+            <script src="IodineGBA/core/graphics/Mosaic.js"></script>
+            <script src="IodineGBA/core/graphics/OBJ.js"></script>
+            <script src="IodineGBA/core/graphics/OBJWindow.js"></script>
+            <script src="IodineGBA/core/graphics/Window.js"></script>
+            <script src="IodineGBA/core/graphics/Compositor.js"></script>
+            <script src="IodineGBA/core/memory/DMA0.js"></script>
+            <script src="IodineGBA/core/memory/DMA1.js"></script>
+            <script src="IodineGBA/core/memory/DMA2.js"></script>
+            <script src="IodineGBA/core/memory/DMA3.js"></script>
+            <script src="IodineGBA/core/cartridge/SaveDeterminer.js"></script>
+            <script src="IodineGBA/core/cartridge/SRAM.js"></script>
+            <script src="IodineGBA/core/cartridge/FLASH.js"></script>
+            <script src="IodineGBA/core/cartridge/EEPROM.js"></script>
+            <!--Add your webpage scripts below-->
+						<script src="user_scripts/jszip.min.js"></script>
+						<script src="user_scripts/jszip-utils.min.js"></script>
+						<script src="user_scripts/localforage.min.js"></script>
+            <script src="user_scripts/XAudioJS/swfobject.js"></script>
+            <script src="user_scripts/XAudioJS/resampler.js"></script>
+            <script src="user_scripts/XAudioJS/XAudioServer.js"></script>
+            <script src="user_scripts/IodineGBAROMLoadGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAJoyPadGlueCode.js"></script>
+            <script src="user_scripts/IodineGBASavesGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAGraphicsGlueCode.js"></script>
+            <script src="user_scripts/IodineGBAAudioGlueCode.js"></script>
+            <script src="user_scripts/IodineGBACoreGlueCode.js"></script>
+            <script src="user_scripts/base64.js"></script>
+            <link rel="stylesheet" href="user_css/main.css">
+			<link rel="stylesheet" href="user_css/xp-border.css">
+    </head>
+    <body>
+		<div id="border"><img draggable="false" src="../img/xp_border/tl.png" id="tl"></img><h1 id="windowtitle"> GBA Emulator</h1><img draggable="false" src="../img/xp_border/pause.png" id="pause"></img><img draggable="false" src="../img/xp_border/close.png" id="close"></img><img draggable="false" src="../img/xp_border/top.png" id="top"></img><img draggable="false" src="../img/xp_border/tr.png" id="tr"></img><br>
+			<img draggable="false" src="../img/xp_border/left.png" id="left"><img draggable="false" src="../img/xp_border/right.png" id="right"></img><br>
+			<img draggable="false" src="../img/xp_border/bl.png" id="bl"></img><img draggable="false" src="../img/xp_border/bttm.png" id="bttm"></img><img draggable="false" src="../img/xp_border/br.png" id="br"></img>
+		</div>
+
+        <canvas id="emulator_target" width="240px" height="160px"></canvas>
+        <span id="tempMessage"></span>
+
+        <script>
+
+            // Close button
+            var cbutton = document.querySelector("#close")
+            cbutton.onmousedown = function() {
+                window.top.location.replace("../PLAY%20GAMES.html#exit")
+                cbutton.src = "../img/xp_border/close-down.png"
+            }
+            cbutton.onmouseenter = function() {
+                cbutton.src = "../img/xp_border/close-hover.png"
+            }
+            
+            cbutton.onmouseleave = function() {
+                cbutton.src = "../img/xp_border/close.png"
+            }
+
+            // Pause Button
+
+            var pbutton = document.querySelector("#pause")
+            var pstate = false
+            pbutton.onmousedown = function() {
+                if (Iodine.paused) {
+                    Iodine.play()
+                } else {
+                    Iodine.pause()
+                }
+            }
+            pbutton.onmouseenter = function() {
+                pstate = true
+            }
+            
+            pbutton.onmouseleave = function() {
+                pstate = false
+            }
+            function setsrc(image,src) {
+                if (image.src != src) {
+                    image.src = src
+                }
+            }
+
+            setInterval(function() {
+                if (Iodine.paused) {
+                    setsrc(pbutton,"../img/xp_border/pause-down.png")
+                } else {
+                    if (pstate) {
+                        setsrc(pbutton,"../img/xp_border/pause-hover.png")
+                    } else {
+                        setsrc(pbutton,"../img/xp_border/pause.png")
+                        
+                    }
+                }
+            },15)
+
+
+            // Loading Cursor
+            var i = 1
+            setInterval(function() {
+                i += 1
+                if (i >= 5) { i = 1}
+                if (!loadingDone) {
+                    console.log(i)
+                    document.body.style.cursor = `url("../img/xp_border/loadingcursor/${i}.gif"),auto`
+                } else {
+                    document.body.style.cursor = `url("../img/xp_border/regular.cur"),auto`
+                }
+            },100)
+        </script>
+    </body>
+</html>

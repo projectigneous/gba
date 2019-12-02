@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Emulators</title>
+		<script>
+		window.onerror = function(a) {
+			console.error(arguments);
+			alert(a);
+		};
+		if (navigator.userAgent.match("Trident")) {
+			alert("This website does not work in IE. Please use Google Chrome or Firefox.");
+			location.replace("about:blank")
+		};
+		</script>
+		<meta charset="UTF-8">
+		<style>
+			#gamebox{
+				position:fixed;
+				width: 100vw;
+				height:100vh;
+				background-color: rgba(0,0,0,0.95);
+				z-index: 100;
+				top: 100vh;
+				transition: 1s all;	
+			}
+			#game {
+				position: fixed;
+				width: 240px;
+				height: 160px;
+				left: 50vw;
+				top: 100vh;
+				transform: translate(-50%,00%);
+				transition: 1s all;
+				z-index: 200;
+				border:0;
+
+			}
+			body {
+				margin:0;
+				font-family: monospace;
+				background: #222;
+				color: #eee;
+				text-align: center;
+			}
+			a {
+				color: #aae;
+				text-decoration:none;
+			}
+			a.downloaded {
+				color: #aea;
+			}
+			
+			.gbaGame::before {
+				content: "GBA";
+				color: transparent;
+				width: 1em;
+				height: 1em;
+				background-image: url("img/gba.svg");
+				background-size: cover;
+				text-decoration:none;
+			}
+			
+			#random {
+				position: fixed;
+				bottom: 1em;
+				right: 1em;
+				transform: scale(0.25);
+				transform-origin: bottom right;
+				transition: 0.25s transform;
+				background-image: url(./img/david.png);
+				background-size: cover;
+				background-position: center;
+			}
+			#random >  svg {				
+				filter: invert(1);
+				opacity: 0.8;
+			}
+			#random:hover {
+				transform: scale(0.3) ;
+			}
+			
+			.downloadedOnly > .game {
+				display: none;
+				position: absolute;
+			}
+			.downloadedOnly > .downloaded {
+				display: block;
+				position: static;
+			}
+			#down {
+				position:fixed;
+				top:0;
+				left:0;
+				backdrop-filter:blur(8px);
+				width:100vw;
+				height:100vh;
+				background-color: rgba(0,0,0,0.8);
+				overflow: hidden;
+			}
+			#down > h1 {
+				position:fixed;
+				text-align: center;
+				top: 50vh;
+				left: 50vw;
+				transform:translate(-50%,-50%);
+				font-family:sans-serif;
+				transition: 1s opacity;
+			}
+			
+		</style>
+    </head>
+    <body>
+        <h1>Emulators</h1>
+		<h2>UI by <a href="https://thelmgn.com">theLMGN</a>, games hosted by <a href="https://the-eye.eu/public/rom">The Eye</a> </h2>
+		<div id="search"><input type="text" placeholder="Search games"></input><button>Search</button><br><input type="checkbox" id="dlOnly" ></input>Show downloaded games only</div>
+		<div id="container"><h1>Allow scripts!<h1></div>
+		<button id="random" onclick="randomize()"><svg version="1" xmlns="http://www.w3.org/2000/svg" width="366" height="366"><path d="M356 0H10C4 0 0 4 0 10v346c0 6 4 10 10 10h346c6 0 10-4 10-10V10c0-6-4-10-10-10zM92 316a35 35 0 1 1 0-70 35 35 0 0 1 0 70zm0-196a35 35 0 1 1 0-70 35 35 0 0 1 0 70zm91 98a35 35 0 1 1 0-70 35 35 0 0 1 0 70zm91 98a35 35 0 1 1 0-70 35 35 0 0 1 0 70zm0-196a35 35 0 1 1 0-70 35 35 0 0 1 0 70z"/></svg></button>
+		<div id="gamebox"></div>
+		<iframe id="game"></iframe>
+		<script src="gba/user_scripts/localforage.min.js"></script>
+		<script src="assets/games.js"></script>
+		<div id="down" >
+			<h1>Connecting to game server....</h1>
+		</div>
+        <script src="assets/index.js">
+		</script>
+    </body>
+</html>
