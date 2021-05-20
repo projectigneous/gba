@@ -9,7 +9,7 @@ async function pingEye() {
     } catch(e){up = false}
     var keys = await localforage.keys()
     if (!up) {
-        document.querySelector("#down > h1").innerText = "The game server could not be contacted."
+        document.querySelector("#down > h1").innerText = "The game server could not be contacted.<br><a href='https://cors-anywhere.herokuapp.com/corsdemo'>Try requesting access</a>"
 
         if (keys.length >= 2) {
             document.querySelector("#dlOnly").checked = true
