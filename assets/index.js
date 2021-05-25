@@ -9,8 +9,10 @@ async function pingEye() {
     } catch(e){up = false}
     var keys = await localforage.keys()
     if (!up) {
-        document.querySelector("#down > h1").innerHTML = "The game server could not be contacted.<br><a href='https://cors-anywhere.herokuapp.com/corsdemo'>Try requesting access</a>"
-
+        document.querySelector("#down > h1").innerHTML = "The game server could not be contacted.<br><a href='https://cors-anywhere.herokuapp.com/corsdemo'>Try requesting access</a><br><br><iframe width=900 height=70 src='https://cors-anywhere.herokuapp.com/corsdemo' style='border:0'></iframe><br>And then <a href='javascript:location.reload()'>reload this page.</a>"
+        setTimeout(function() {
+            document.querySelector("iframe").onload = () => location.reload()
+        },1000)
         if (keys.length >= 2) {
             document.querySelector("#dlOnly").checked = true
             document.querySelector("#dlOnly").disabled = true
